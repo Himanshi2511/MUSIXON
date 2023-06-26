@@ -13,10 +13,10 @@ const userSchema = new mongoose.Schema({
     date: {type:String, required:false},
     year: {type:String, required:false},
     likedSongs: {type:[String], default:[]},
-    playlists: {type:[String], default:[]},
+    playlists: {type:[[String]], default:[[]]},
 });
 
-userSchema.methods.generateAuthToken = function(){
+userSchema.methods.generateAuthToken = async function(){
     const token = jwt.sign(
         {_id: this._id, name:this.name, email:this.email},
         process.env.JWTSECRET,

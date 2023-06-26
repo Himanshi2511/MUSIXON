@@ -4,22 +4,25 @@ const ejs = require('ejs');
 const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/users");
-const authRoutes = require("./routes/auth");
-const auth = require("./middleware/auth");
-const bodyParser = require("body-parser")
+const authRoutes = require("./routes/login");
+const isAuth = require("./middleware/auth");
+const bodyParser = require("body-parser") // for this also
 const session = require('express-session');
 const { User, validate } = require("./models/user");
 const mongoDbSession = require('connect-mongodb-session')(session)
-
+const cookieParser = require('cookie-parser');
+const { link } = require("joi");
 
 //middlewares
 app.use(express.static('static'));   
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // don't know why but we use
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 
 //set view engine
 app.set('view engine', 'ejs');
+
 
 //connecting to mongodb
 const dburl = process.env.MongoURI;
@@ -27,47 +30,24 @@ mongoose.connect(dburl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('DB connected successfully...'))
     .catch((err) => console.log('DB could not connect!\nError: ',err));
 
-    const store = new mongoDbSession({
-        uri: dburl,
-        collection: "sessions"
-      })
-
-      app.use(session({
-        secret: process.env.JWTSECRET,
-        resave: false,
-        saveUninitialized: false,
-        store: store
-      }))
 
 
-
-//Authentication
-const isAuth = function(req, res, next) {
-    if (req.session.isAuth) {
-      next()
-    } else {
-      req.session.error = '';
-      res.render('login', {
-        isAuth: req.session.isAuth,
-        message: "You are not logged in!",
-        title: "Log In | "
-      })
-    }
-  }
-
-
-app.post('/addliked', async(req,res)=>{
-  likedSong=req.body.songC;
-  const user = await User.findByIdAndUpdate(req.session.user_id,{$push:{"likedSongs":likedSong}});
+app.post('/liked/add/:id',isAuth, async(req,res)=>{
+    let value = req.params.id;
+    // console.log(value);
+  const user = await User.findByIdAndUpdate(req.user._id,{$push:{"likedSongs":value}});
 })
 
-app.post('/rmvliked', async (req,res)=>{
-  removedSong = req.body.songC;
-  const user = await User.findByIdAndUpdate(req.session.user_id, {$pull: { "likedSongs": removedSong }});
+app.post('/liked/remove/:id',isAuth, async(req,res)=>{
+    let value = req.params.id;
+    await User.findByIdAndUpdate(req.user._id,{$pull:{"likedSongs":value}});
+    const user = await User.findById(req.user._id);
+    res.json({list:user.likedSongs});
+
 })
 
 app.get('/', isAuth,(req, res) => {
-    res.render('home.ejs',{
+    res.render('home',{
         title: ''
     })
 });
@@ -76,11 +56,14 @@ app.use("/api/users/", userRoutes);
 app.use("/api/login/", authRoutes);
 
 
-app.get('/queue',auth,(req,res)=>{
+app.get('/queue',isAuth,async(req,res)=>{
+    const user = await User.findById(req.user._id); 
+    list = user.likedSongs
+    
     res.render('queue',{
         isAuth:false,
         title:"queue |",
-        list: []
+        list: list
     })
 })
 
@@ -100,11 +83,10 @@ app.get('/dashboard',isAuth,(req,res)=>{
 })
 
 app.get('/seeall/:id',isAuth,async (req,res)=>{
-    const user = await User.findById(req.session.user_id);
+    const user = await User.findById(req.user._id);
     // console.log(user.likedSongs);
 
     res.render('seeall',{
-        isAuth:false,
         title:"All songs |",
         id: req.params.id,
         lkSongs : user.likedSongs
@@ -112,10 +94,8 @@ app.get('/seeall/:id',isAuth,async (req,res)=>{
 })
 
 app.get('/logout', function(req, res) {
-    req.session.destroy((err) => {
-      if (err) throw err;
-      res.redirect('/')
-    })
+    res.clearCookie("token");
+    res.redirect('/')
   })
 
 

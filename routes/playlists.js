@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { User, validate } = require("../models/user");
-// const auth = require("../middleware/auth");
-// const validateObjectId = require("../middleware/validateObjectId");
+const auth = require("../middleware/auth");
+const validateObjectId = require("../middleware/validateObjectId");
 
 // get user by email
 router.get("/:email", async (req, res) => {
