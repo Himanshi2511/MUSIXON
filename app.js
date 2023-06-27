@@ -34,6 +34,7 @@ mongoose.connect(dburl, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.post('/liked/add/:id',isAuth, async(req,res)=>{
     let value = req.params.id;
+    console.log(value);
     // console.log(value);
   const user = await User.findByIdAndUpdate(req.user._id,{$push:{"likedSongs":value}});
 })
