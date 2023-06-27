@@ -25,18 +25,6 @@ async function rock(){
                     html_data+=item;
                     
                   }
-                  let item = ` <div class="swiper-slide Recommended-slide">
-                  <div class="card" style="width: 18rem;">
-
-                      <div class="card-body">
-                      <img class="card-img-top" style="height: 12rem;" src="../img/IMG20220519111015.jpg" alt="Card image cap">
-                        <h5 class="card-title"><a href="seeall/rock">see all</a></h5>
-                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                      </div>
-                    </div>
-                </div>`
-                  html_data+=item;
                   rock_id.innerHTML = html_data;
        })
 
@@ -70,18 +58,6 @@ async function romance(){
                     html_data+=item;
                     
                   }
-                  let item = ` <div class="swiper-slide Recommended-slide">
-                  <div class="card" style="width: 18rem;">
-
-                      <div class="card-body">
-                      <img class="card-img-top" style="height: 12rem;" src="../img/IMG20220519111015.jpg" alt="Card image cap">
-                        <h5 class="card-title"><a href="seeall/romance">see all</a></h5>
-                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                      </div>
-                    </div>
-                </div>`
-                  html_data+=item;
                   romance_id.innerHTML = html_data;
        })
 
@@ -114,18 +90,6 @@ async function P0P(){
                     html_data+=item;
                     
                   }
-                  let item = ` <div class="swiper-slide Recommended-slide">
-                  <div class="card" style="width: 18rem;">
-
-                      <div class="card-body">
-                      <img class="card-img-top" style="height: 12rem;" src="../img/IMG20220519111015.jpg" alt="Card image cap">
-                        <h5 class="card-title"><a href="seeall/pop">see all</a></h5>
-                        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-                      </div>
-                    </div>
-                </div>`
-                  html_data+=item;
                   P0P_id.innerHTML = html_data;
        })
 
@@ -135,7 +99,7 @@ async function P0P(){
 
 
 
-// for recommended songs
+// for recommended songs(for heading songs)
 
 async function songid(){
     const recommend_id = document.getElementById('song_id');
@@ -162,21 +126,11 @@ async function songid(){
                       html_data+=item;
                       
                     }
-                    let item = ` <div class="swiper-slide Recommended-slide">
-                    <div class="card" style="width: 18rem;">
-  
-                        <div class="card-body">
-                        <img class="card-img-top" style="height: 12rem;" src="../img/IMG20220519111015.jpg" alt="Card image cap">
-                          <h5 class="card-title"><a href="/seeall/loop">see all</a></h5>
-                  
-                        </div>
-                      </div>
-                  </div>`
-                    html_data+=item;
                     recommend_id.innerHTML = html_data;
          })
 
-}songid();
+}
+songid();
 
 
 
