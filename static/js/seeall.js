@@ -10,9 +10,10 @@ async function seeall(type,lkSongs) {
     ).then((data) => {
       for (let i = 0; i < data.data.length; i++) {
         lis.push(data.data[i])
-        let checkLiked = data.data[i].songName+'-'+data.data[i].artistsName;
+        let checkLiked = data.data[i].id;
+
         let lkColor = "white";
-        for (const x of likedSongs) { if(x==checkLiked) lkColor="red"; }
+        for (const x of likedSongs) { if(x==checkLiked) lkColor="red";}
         let id = `likedColor-${i}`;
         let id2 = `SongName-${i}`;
         let item = `

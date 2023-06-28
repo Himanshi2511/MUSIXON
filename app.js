@@ -85,8 +85,6 @@ app.get('/dashboard',isAuth,(req,res)=>{
 
 app.get('/seeall/:id',isAuth,async (req,res)=>{
     const user = await User.findById(req.user._id);
-    // console.log(user.likedSongs);
-
     res.render('seeall',{
         title:"All songs |",
         id: req.params.id,
