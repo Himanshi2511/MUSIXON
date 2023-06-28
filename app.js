@@ -47,10 +47,10 @@ app.post('/liked/remove/:id',isAuth, async(req,res)=>{
 
 app.get('/', isAuth,async(req, res) => {
     const user = await User.findById(req.user._id);
-    console.log(user.history);
     res.render('home',{
         title: '',
-        hist:user.history
+        hist:user.history,
+        takeauth: true
     })
 });
 

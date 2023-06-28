@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 
 router.get("/",(req,res)=>{
 	res.render('signup',{
-		isAuth: false,
 		message :"",
-		title : "Signup | "
+		title : "Signup | ",
+		takeauth: false
 	})
 });
 
@@ -18,7 +18,7 @@ router.post("/",async (req,res)=>{
 	// console.log(error);
 	if(error){
 		return res.render('signup',{
-			isAuth: false,
+			takeauth: false,
 			message :error,
 			title : "Signup | "
 		})
@@ -26,7 +26,7 @@ router.post("/",async (req,res)=>{
 	const user = await User.findOne({ email: req.body.email });
 	if(user){
 		return res.render('signup',{
-			isAuth: false,
+			takeauth: false,
 			message :"!! User already exist !!",
 			title : "Signup | "
 		})
@@ -43,7 +43,7 @@ router.post("/",async (req,res)=>{
 	const token = await newUser.generateAuthToken();
 	res.cookie('token', token, { httpOnly: true });
 	res.render('signup',{                     //render dashboard here.
-		isAuth: false,
+		takeauth: false,
 		message :"!! User already exist !!",
 	    title : "Signup | "
 	});

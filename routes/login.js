@@ -6,7 +6,8 @@ const isAuth = require("../middleware/auth");
 router.get('/',(req, res) => {
   res.render('login', {
     message: "",
-    title: "Log In | "
+    title: "Log In | ",
+    takeauth: false
   })
 })
 
@@ -15,6 +16,7 @@ router.post("/", async (req, res) => {
   let password = req.body.password;
   if(email=="" || password==""){
       return res.render("login", {
+        takeauth: false,
         message: 'Invalid email or password!',
         title: 'Log In |'
       });
@@ -24,6 +26,7 @@ router.post("/", async (req, res) => {
   const user = await User.findOne({ email: email });
   if (!user)
     return res.render("login", {
+      takeauth: false,
       message: 'User Not Found',
       title: 'Log In |'
     });
@@ -31,6 +34,7 @@ router.post("/", async (req, res) => {
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword)
     return res.render("login", {
+      takeauth: false,
       message: 'Invalid password!',
       title: 'Log In |'
     });
