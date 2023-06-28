@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     month: {type:String, required:false},
     date: {type:String, required:false},
     year: {type:String, required:false},
+    history:{type:[String], default:[]},
     likedSongs: {type:[String], default:[]},
     playlists: {type:[[String]], default:[[]]},
 });

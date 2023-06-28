@@ -2,7 +2,8 @@
 
 
     <div id="start" class="container-fluid">
-        <!-- Recently played
+        <!-- Recently played -->
+      <!-- <% if(hist!=''){%> -->
         <div class="swiper mySwiper Recommended">
             <div class="col-lg-6">
                 <h3 class="mb-3">Recently played</h3>
@@ -21,12 +22,8 @@
                 </div>
             </div>
             <div class="swiper-pagination"></div>
-        </div> --> 
-
-
-
-
-
+        </div> 
+        <!-- <%}%> -->
 
         <!--Songs -->
         <div class="swiper mySwiper Recommended">
@@ -257,9 +254,9 @@
     <!-- <script>console.log(title)</script> -->
     <!-- home -->
     <script src="../js/home/home.js"></script>
+    <script>historyofsong('<%=hist%>')</script>
 
     <!-- End of Script Tags -->
-
     <%- include("footer") -%>
 
         </body>

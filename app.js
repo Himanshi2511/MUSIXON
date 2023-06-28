@@ -9,9 +9,7 @@ const isAuth = require("./middleware/auth");
 const bodyParser = require("body-parser") // for this also
 const session = require('express-session');
 const { User, validate } = require("./models/user");
-const mongoDbSession = require('connect-mongodb-session')(session)
 const cookieParser = require('cookie-parser');
-const { link } = require("joi");
 
 //middlewares
 app.use(express.static('static'));   
@@ -47,9 +45,12 @@ app.post('/liked/remove/:id',isAuth, async(req,res)=>{
 
 })
 
-app.get('/', isAuth,(req, res) => {
+app.get('/', isAuth,async(req, res) => {
+    const user = await User.findById(req.user._id);
+    console.log(user.history);
     res.render('home',{
-        title: ''
+        title: '',
+        hist:user.history
     })
 });
 
@@ -60,13 +61,30 @@ app.use("/api/login/", authRoutes);
 app.get('/queue',isAuth,async(req,res)=>{
     const user = await User.findById(req.user._id); 
     list = user.likedSongs
-    
     res.render('queue',{
         isAuth:false,
         title:"queue |",
         list: list
     })
 })
+
+app.post('/addhistory/:id',isAuth,async(req,res)=>{
+    let id = req.params.id;
+    // console.log(id);
+    await User.findByIdAndUpdate({_id:req.user._id},{$pull:{"history":id}});
+    const user = User.findOne({_id:req.user._id},(err,user)=>{
+        if(err){
+            console.log("error in History section of database");
+        }
+        else{
+            user.history.unshift(id);
+            if(user.history.length>=16)user.history.pop();
+            user.save();
+            // console.log(user.history);
+            res.json({history:user.history});
+        }
+    });
+});
 
 
 app.get('/player',isAuth,(req,res)=>{
@@ -100,5 +118,5 @@ app.get('/logout', function(req, res) {
 
 
 
-const PORT = process.env.PORT || 8000   ;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT,console.log(`Server running on http://localhost:${PORT}/`));
