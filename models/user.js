@@ -14,7 +14,10 @@ const userSchema = new mongoose.Schema({
     year: {type:String, required:false},
     history:{type:[String], default:[]},
     likedSongs: {type:[String], default:[]},
-    playlists: {type:[[String]], default:[[]]},
+    playlists: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Playlist"
+    }],
 });
 
 userSchema.methods.generateAuthToken = async function(){
