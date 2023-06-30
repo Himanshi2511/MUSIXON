@@ -42,11 +42,7 @@ router.post("/",async (req,res)=>{
 
 	const token = await newUser.generateAuthToken();
 	res.cookie('token', token, { httpOnly: true });
-	res.render('signup',{                     //render dashboard here.
-		takeauth: false,
-		message :"!! User already exist !!",
-	    title : "Signup | "
-	});
+	res.redirect('/');
 })
 
 module.exports = router;

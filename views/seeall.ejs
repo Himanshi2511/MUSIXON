@@ -12,6 +12,27 @@
        </div>
     </li>
 </ul> -->
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Your Playlist</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <h3>playlist1</h3>
+        <h3>playlist1</h3>
+        <h3>playlist1</h3>
+        <h3>playlist1</h3>
+        <h3>playlist1</h3>
+        <h3>playlist1</h3>
+      </div>
+    </div>
+  </div>
+</div>
     
 <table class="table">
     <thead>
@@ -30,14 +51,12 @@
         <th scope="row">1</th>
         <td>Mark</td>
         <td>Otto</td>
-        <td>add to playlist</td>
+        <td><button data-modal-target="#modal">Open Modal</button></td>
         <td><i class="fa-regular fa-heart"></i></td>
-        <td>0</td>
-        
+        <td>0</td> 
       </tr>
     </tbody>
   </table>
-  <!-- <script>(console.log('<%=lkSongs%>'))</script> -->
 
   <script src="../js/seeall.js"> </script>
   <script>seeall('<%=id%>','<%=lkSongs%>')</script>

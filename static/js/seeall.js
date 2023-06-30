@@ -22,7 +22,9 @@ async function seeall(type,lkSongs) {
                       <td><img src=${data.data[i].Image_s} width="50" height="50" alt=""></td>
                       <td class="${id2}">${data.data[i].songName}</td>
                       <td class="${id2}">${data.data[i].artistsName}</td>
-                      <td>add to playlist</td>
+                      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                      Add to Playlist
+                    </button></td>
                       <!-- <td><a class="${id}" onclick=changeColor("${data.data[i].id}",this.className)> <i id="00${id}" class="fa fa-heart-o" style="font-size:26px;color:white"></i></a></td> -->
                       <td><a class="${id}" onclick=changeColor('${i}',"${data.data[i].id}")> <i id="00${id}" class="fas fa-heart" style="font-size:26px;color:${lkColor}"></i></a></td>
                       <td>${Math.floor((data.data[i].time) / 60000)}:${Math.floor(((data.data[i].time) / 1000) % 60)}</td>
