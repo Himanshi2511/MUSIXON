@@ -4,8 +4,16 @@ const Playlist = require('../models/playlist');
 const {User} = require('../models/user');
 
 router.get('/',isAuth,(req,res)=>{
-    res.render('playlist',{
-        title: 'playlist',
+    User.findOne({_id:req.user._id}).populate("playlists").exec((err,user)=>{
+        if(err){
+            console.log("error in fetching0");
+        }
+        else{
+            res.render('playlist',{
+                title: 'playlist',
+                playlist:user.playlists
+            })
+        }
     })
 })
 
@@ -38,6 +46,7 @@ router.post('/',isAuth,(req,res)=>{
                     return res.render('playlist',{
                         title: 'playlist',
                         message:"name already take",
+                        playlist:user.playlists
                     })
                 }
                 else{
@@ -51,6 +60,7 @@ router.post('/',isAuth,(req,res)=>{
                     let thisplaylist = user.playlists;
                     return res.render('playlist',{
                         title: 'playlist',
+                        playlist:thisplaylist
                     })
                 }
             })
