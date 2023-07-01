@@ -78,7 +78,9 @@ function createmodal(songid){
     success: function(data){
       let html1 = ''
       for(let i = 0;i<data.length;i++){
-          html1 += `<h3 onclick=sendsong("/addsong/${data[i]._id}/${songid}")>${data[i].name}</h3>`
+          html1 += `<h3 onclick=sendsong("/addsong/${data[i]._id}/${songid}")>
+          <span data-dismiss="modal"><a href = '#'>${data[i].name}</a></span>
+          </h3>`
       }
       target.innerHTML = html1;
     }
