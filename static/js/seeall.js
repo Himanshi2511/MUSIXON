@@ -22,7 +22,7 @@ async function seeall(type,lkSongs) {
                       <td><img src=${data.data[i].Image_s} width="50" height="50" alt=""></td>
                       <td class="${id2}">${data.data[i].songName}</td>
                       <td class="${id2}">${data.data[i].artistsName}</td>
-                      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick=createmodal("${data.data[i].id}")>
                       Add to Playlist
                     </button></td>
                       <!-- <td><a class="${id}" onclick=changeColor("${data.data[i].id}",this.className)> <i id="00${id}" class="fa fa-heart-o" style="font-size:26px;color:white"></i></a></td> -->
@@ -69,3 +69,28 @@ function changeColor(i,song_id) {
   }
 }
 
+
+function createmodal(songid){
+  let target = document.getElementById('add_modal_byme');
+  $.ajax({
+    url:`/playlist/data`,
+    method:"get",
+    success: function(data){
+      let html1 = ''
+      for(let i = 0;i<data.length;i++){
+          html1 += `<h3 onclick=sendsong("/addsong/${data[i]._id}/${songid}")>${data[i].name}</h3>`
+      }
+      target.innerHTML = html1;
+    }
+  })
+}
+
+function sendsong(url){
+  $.ajax({
+    url:url,
+    method:"post",
+    success:function (data) {
+      console.log("data send");
+    }
+  })
+}
