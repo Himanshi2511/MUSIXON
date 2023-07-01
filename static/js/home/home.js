@@ -57,6 +57,7 @@ async function rock(){
                     html_data+=item;
                     
                   }
+                  console.log(rock_id);
                   rock_id.innerHTML = html_data;
        })
 }rock();

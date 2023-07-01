@@ -10,6 +10,9 @@ const bodyParser = require("body-parser") // for this also
 const session = require('express-session');
 const { User, validate } = require("./models/user");
 const cookieParser = require('cookie-parser');
+const playlistRoutes = require('./routes/playlists');
+const Playlist = require("./models/playlist");
+const { json } = require("body-parser");
 
 //middlewares
 app.use(express.static('static'));   
@@ -56,6 +59,7 @@ app.get('/', isAuth,async(req, res) => {
 
 app.use("/api/users/", userRoutes);
 app.use("/api/login/", authRoutes);
+app.use("/playlist",playlistRoutes);
 
 
 app.get('/queue',isAuth,async(req,res)=>{
@@ -101,12 +105,19 @@ app.get('/dashboard',isAuth,(req,res)=>{
     })
 })
 
-app.get('/seeall/:id',isAuth,async (req,res)=>{
-    const user = await User.findById(req.user._id);
-    res.render('seeall',{
-        title:"All songs |",
-        id: req.params.id,
-        lkSongs : user.likedSongs
+app.get('/seeall/:id',isAuth,(req,res)=>{
+    User.findById(req.user._id).populate('playlists').exec((err,user)=>{
+        if(err){
+            console.log("error in seeall db connectoin");
+        }
+        else{
+            return res.render('seeall',{
+                title:"All songs |",
+                id: req.params.id,
+                lkSongs : user.likedSongs,
+                Playlist:user.playlists
+            })
+        }
     })
 })
 
