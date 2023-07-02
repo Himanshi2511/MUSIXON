@@ -1,0 +1,31 @@
+<%- include("header") -%>
+<script src="https://kit.fontawesome.com/7c21f95028.js" crossorigin="anonymous"></script>
+    
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Image</th>
+        <th scope="col">Track</th>
+        <th scope="col">Artist</th>
+        <th>Playlist</th>
+        <th>Like</th>
+        <th scope="col">Duration</th>
+      </tr>
+    </thead>
+    <tbody id = "seeall_id">
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td><button data-modal-target="#modal">Open Modal</button></td>
+        <td><i class="fa-regular fa-heart"></i></td>
+        <td>0</td> 
+      </tr>
+    </tbody>
+  </table>
+
+  <script src="../js/seeplaylist.js"> </script>
+  <script>seeall('<%=songs%>','<%=lkSongs%>')</script>
+
+<%- include("footer") -%>

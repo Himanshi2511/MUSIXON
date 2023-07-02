@@ -68,6 +68,17 @@ router.post('/',isAuth,(req,res)=>{
     })
 })
 
+router.get('/:id',isAuth,async(req,res)=>{
+    const id = req.params.id;
+    const play = await Playlist.findById({_id:id});
+    const user = await User.findById({_id:req.user._id});
+    res.render('seeplaylist',{
+        title: play.name + " | ",
+        lkSongs: user.likedSongs,
+        songs:play.songs
+    })
+});
+
 module.exports = router;
 
 
