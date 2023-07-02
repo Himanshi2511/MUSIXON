@@ -1,9 +1,10 @@
 lis = []
-async function seeall(songs,lkSongs) {
+async function seeall(grpid,songs,lkSongs) {
   const seeall_id = document.getElementById('seeall_id');
   let html_data = '';
-  const likedSongs = lkSongs.split(",");
-  songs = songs.split(",");
+  let likedSongs = lkSongs;
+  if(typeof(lkSongs)==="string")likedSongs = lkSongs.split(",");
+  if(typeof(songs)==="string")songs = songs.split(",");
  
   let allsong = []
   await fetch(`../../data/loop.json`)
@@ -24,9 +25,9 @@ async function seeall(songs,lkSongs) {
                       <tr>
                       <th scope="row">${i + 1}.</th>
                       <td><img src=${allsong[i].Image_s} width="50" height="50" alt=""></td>
-                      <td class="${id2}">${allsong[i].songName}</td>
+                      <td><a href ="#" onclick=songtofooter("${allsong[i].id}")>${allsong[i].songName}</a></td>
                       <td class="${id2}">${allsong[i].artistsName}</td>
-                      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick=remove_from_playlist("${allsong[i].id}")>
+                      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick=remove_from_playlist("remove/${grpid}/${allsong[i].id}")>
                       Remove from Playlist
                     </button></td>
                       <!-- <td><a class="${id}" onclick=changeColor("${allsong[i].id}",this.className)> <i id="00${id}" class="fa fa-heart-o" style="font-size:26px;color:white"></i></a></td> -->
@@ -76,10 +77,10 @@ function changeColor(i,song_id) {
 
 function remove_from_playlist(data){
   $.ajax({
-    url:`playlist/remove/${data}`,
+    url:data,
     method:"post",
     success:function (data) {
-      console.log("data send");
+      seeall(data.grpid,data.song,data.lkSongs)
     }
   })
 }

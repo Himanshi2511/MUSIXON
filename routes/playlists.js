@@ -75,7 +75,23 @@ router.get('/:id',isAuth,async(req,res)=>{
     res.render('seeplaylist',{
         title: play.name + " | ",
         lkSongs: user.likedSongs,
-        songs:play.songs
+        songs:play.songs,
+        grpid:id
+    })
+});
+
+
+router.post('/remove/:grpid/:id',isAuth,async(req,res)=>{
+    const id = req.params.id;
+    const grpidid = req.params.grpid;
+    console.log(id);
+    await Playlist.findByIdAndUpdate({_id:grpidid},{$pull:{"songs":id}})
+    const play = await Playlist.findById({_id:grpidid});
+    const user = await User.findById({_id:req.user._id});
+    res.json({
+        grpid:play._id,
+        song:play.songs,
+        lkSongs:user.likedSongs
     })
 });
 

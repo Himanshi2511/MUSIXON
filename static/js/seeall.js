@@ -20,7 +20,7 @@ async function seeall(type,lkSongs) {
                       <tr>
                       <th scope="row">${i + 1}.</th>
                       <td><img src=${data.data[i].Image_s} width="50" height="50" alt=""></td>
-                      <td class="${id2}">${data.data[i].songName}</td>
+                      <td><a href ="#" onclick=songtofooter("${data.data[i].id}")>${data.data[i].songName}</a></td>
                       <td class="${id2}">${data.data[i].artistsName}</td>
                       <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick=createmodal("${data.data[i].id}")>
                       Add to Playlist
