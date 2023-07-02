@@ -45,9 +45,8 @@ function printdata(data,color) {
                       <tr>
                       <th scope="row">${i + 1}.</th>
                       <td><img src=${data[i].Image_s} width="50" height="50" alt=""></td>
-                      <td><a href ="#" onclick=songtofooter("${data[i].id}")>${data[i].songName}</a></td>
+                      <td><p class="text-primary" onclick=songtofooter("${data[i].id}")>${data[i].songName}</p></td>
                       <td>${data[i].artistsName}</td>
-                      <td>add to playlist</td>
                       <td><a class="${id}" onclick=changeColor("${data[i].id}",this.className)> <i id ="00${id}" class="fa fa-heart-o" style="font-size:26px;color:${color}"></i></a></td>
                       <td>${Math.floor((data[i].time) / 60000)}:${Math.floor(((data[i].time) / 1000) % 60)}</td>
                     

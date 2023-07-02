@@ -25,7 +25,7 @@ async function seeall(grpid,songs,lkSongs) {
                       <tr>
                       <th scope="row">${i + 1}.</th>
                       <td><img src=${allsong[i].Image_s} width="50" height="50" alt=""></td>
-                      <td><a href ="#" onclick=songtofooter("${allsong[i].id}")>${allsong[i].songName}</a></td>
+                      <td class="${id2}" class="text-primary" onclick=songtofooter("${allsong[i].id}")><p class="text-primary">${allsong[i].songName}</p></td>
                       <td class="${id2}">${allsong[i].artistsName}</td>
                       <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick=remove_from_playlist("remove/${grpid}/${allsong[i].id}")>
                       Remove from Playlist
